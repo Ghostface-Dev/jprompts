@@ -1,24 +1,32 @@
 package com.jprompts.script;
 
 import com.jprompts.core.Prompt;
+import com.jprompts.exception.InconsistentScriptTypeException;
 import com.jprompts.response.Input;
 import com.jprompts.response.Script;
 import org.jetbrains.annotations.NotNull;
+
 
 import java.util.LinkedList;
 
 public class ConfirmScript implements Script {
     private final @NotNull Prompt prompt;
     private final @NotNull Input input;
+    private @NotNull String answer;
 
-    public ConfirmScript(@NotNull Prompt prompt) {
+    public ConfirmScript(@NotNull Prompt prompt) throws InconsistentScriptTypeException {
         this.prompt = prompt;
-        this.input = new Input( prompt);
+        this.input = new Input(prompt);
+        if (!prompt.getType().equalsIgnoreCase("confirm")) {
+            throw new InconsistentScriptTypeException("The script type and prompt type parameter must be consistent");
+        }
     }
 
     @Override
-    public void execute() {
-
+    public void execute(Prompt prompt) {
+        System.out.println();
+        outDesignPrompt(prompt.getQuestions());
+        this.answer = getInput().getResponse();
     }
 
     @Override
@@ -32,7 +40,13 @@ public class ConfirmScript implements Script {
     }
 
     @Override
-    public @NotNull String getResponse() {
-        return input.getResponse();
+    public @NotNull String getAnwser() {
+        return this.answer;
+    }
+
+
+    @Override
+    public @NotNull Input getInput() {
+        return this.input;
     }
 }

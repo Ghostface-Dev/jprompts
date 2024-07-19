@@ -1,20 +1,25 @@
 package com.jprompts.script;
 
 import com.jprompts.core.Prompt;
+import com.jprompts.response.Input;
 import com.jprompts.response.Script;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedList;
 
 public class ListScript implements Script {
     private final @NotNull Prompt prompt;
+    private final @NotNull Input input;
+    private @Nullable String anwser;
 
     public ListScript(@NotNull Prompt prompt) {
         this.prompt = prompt;
+        this.input = new Input(prompt);
     }
 
     @Override
-    public void execute() {
+    public void execute(Prompt prompt) {
         System.out.println();
     }
 
@@ -33,7 +38,12 @@ public class ListScript implements Script {
     }
 
     @Override
-    public @NotNull String getResponse() {
-        return "";
+    public @Nullable String getAnwser() {
+        return this.anwser;
+    }
+
+    @Override
+    public @NotNull Input getInput() {
+        return this.input;
     }
 }
