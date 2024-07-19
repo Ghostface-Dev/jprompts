@@ -1,7 +1,7 @@
 package com.jprompts.script;
 
 import com.jprompts.core.Prompt;
-import com.jprompts.exception.InconsistentScriptTypeException;
+import com.jprompts.exception.InconsistentScriptException;
 import com.jprompts.response.Input;
 import com.jprompts.response.Script;
 import org.jetbrains.annotations.NotNull;
@@ -14,11 +14,11 @@ public class ConfirmScript implements Script {
     private final @NotNull Input input;
     private @NotNull String answer;
 
-    public ConfirmScript(@NotNull Prompt prompt) throws InconsistentScriptTypeException {
+    public ConfirmScript(@NotNull Prompt prompt) {
         this.prompt = prompt;
         this.input = new Input(prompt);
         if (!prompt.getType().equalsIgnoreCase("confirm")) {
-            throw new InconsistentScriptTypeException("The script type and prompt type parameter must be consistent");
+            throw new InconsistentScriptException("The script type and prompt type parameter must be consistent");
         }
     }
 
@@ -39,7 +39,7 @@ public class ConfirmScript implements Script {
         System.out.println("- " + prompts.getFirst() + " (y/n) ");
     }
 
-    @Override
+
     public @NotNull String getAnwser() {
         return this.answer;
     }

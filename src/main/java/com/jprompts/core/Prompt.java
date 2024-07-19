@@ -19,6 +19,9 @@ public class Prompt {
         if (type.equalsIgnoreCase("confirm")) {
             questions.addFirst(question);
         }
+        if (type.equalsIgnoreCase("input")) {
+            questions.add(question);
+        }
     }
 
     public @NotNull String getType() {

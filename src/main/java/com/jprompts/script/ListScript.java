@@ -40,7 +40,6 @@ public class ListScript implements Script {
         }
     }
 
-    @Override
     public @Nullable String getAnwser() {
         return this.anwser;
     }

@@ -27,7 +27,6 @@ public interface Script {
     /*
     * Retorna a resposta do usuario
     * */
-    @Nullable String getAnwser();
 
     @NotNull Input getInput();
 }
