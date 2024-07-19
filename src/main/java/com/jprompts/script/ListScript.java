@@ -21,6 +21,8 @@ public class ListScript implements Script {
     @Override
     public void execute(Prompt prompt) {
         System.out.println();
+        outDesignPrompt(prompt.getQuestions());
+        this.anwser = getInput().getResponse();
     }
 
     @Override
@@ -34,6 +36,7 @@ public class ListScript implements Script {
         int i = 1;
         for (@NotNull String question: prompts) {
             System.out.println(i + " - " + question);
+            i++;
         }
     }
 

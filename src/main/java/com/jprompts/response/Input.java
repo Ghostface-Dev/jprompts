@@ -31,7 +31,7 @@ public class Input {
             return anwser.equalsIgnoreCase(this.anwser);
         }
         if (prompt.getType().equalsIgnoreCase("list")) {
-            return Integer.parseInt(response) > 0 && Integer.parseInt(response) < prompt.getQuestions().size();
+            return Integer.parseInt(response) > 0 && Integer.parseInt(response) <= prompt.getQuestions().size();
         }
         if (prompt.getType().equalsIgnoreCase("confirm")) {
             return response.equalsIgnoreCase("y") || response.equalsIgnoreCase("n");
