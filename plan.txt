@@ -1,0 +1,210 @@
+O executar do script tem que vir um input
+
+o checkers é necessario? ou opcional?
+
+por enquanto vai ser opcional
+
+getInput retorna a instancia necessaria
+
+getInput.getValue retonarna o valor que precisa.
+
+execute precisa retornar o getInput
+
+execute roda o script - roda o checkers e retorna o input
+                            - se o checkers for true = prossegue
+                            - se não = ele roda o design denovo
+
+confirm script é sobre yes or not
+uma question vai aparecer e vai pedir confirmação
+essa confirmação precisa estar associado a uma question
+                                    - talvez por um map (cada question é uma chave e a resposta é seu valor) - private
+                                    - ou linkedList (a ordem vai importar - ela vai percorrer até o intem desejado)
+
+linkedlist pode ser bom se forem poucas perguntas, mas se forem grandes, talvez map pode ser melhor. (futura att)
+quando o design rodar, vai pedir input e vai add na linked list
+o executar precisara retornar um input (em string)
+mas se são varios...
+se for possivel retornar uma lista de objetos em string. mas que retorna string..
+esse retorno precisa ser manipulável (com if-else)
+mas serão 'vários retornos'
+desse jeito executar teria que ser void, e o getInput seria definido no executar
+cada getInput seria diferente, um retorna apenas um input, o outro deveria trabalhar com mais inputs
+eu poderia limitar a aplicação para ter um input, mas daria mais objetos. é bom?
+
+pra limitar eu precisaria apenas limitar o tanto de vez que um input é chamado
+
+(se for confirm, addQuestion precisaria rodar 1 vez (nesse caso, seria addFirst))
+só iria ter uma pergunta e 1 input (pra confirmScript)
+ListScript podem ter várias perguntas, mas sempre terá um input
+
+fazendo isso, não preciso me preocupar com mais possibilidades de input
+
+input quando é instanciado, já precisa dar o valor
+isso é bom?
+talvez ele precise ser chamado no getInput?
+
+como fazer com que uma variavel seja igual a uma instancia? - getInstance?
+
+return newInstance()
+variavel = newInstance()
+
+
+========== novo codigo ============= (;-;)
+
+prompt.getScript().execute(prompt.getQuestionList());
+
+isso aqui está ruim.
+um objeto deve retornar um valor por si só
+o script retorna o valor por si só
+é melhor que retorne o objeto input ou o valor input por si só?
+
+retornar o valor por sí só significa mais 'concreto'
+retornar o objeto input significa mais 'flexibilidade'
+
+a pessao que tiver input, só terá uma método para usa-lo, oque já é mais concreto por sí só.
+
+retornar o input dentro da classe pode significar mais 'fluida' dentro dela' - getInstance() ?
+
+assim que a classe é instanciada, o scanner ja roda, mas ele poderia rodar apenas com um método run
+
+não é bom que input seja instanciado publicamente, ele teria que estar ligado a um script: ambos são requests?
+
+prompt.getScript.getInput - retorna a string?
+ou prompt.getResponse()?
+
+
+// comandos
+
+como eles vão se sair?
+
+ele será utilitária? prompt é um comando?
+
+se prompt for um comando, qual é o signficado?
+
+um prompt e um script é um comando, mas juntos
+
+obrigatoriamente um prompt precisa de um script?
+sim?
+comando, roda um prompt (se o script n for definido por algum motivo, vai dar erro?)
+
+um prompt n pode rodar o script por si só, se for o caso
+um comando sim, mas precisaria ter acesso ao script...
+
+comando ter acesso = classe em comum - ambos são uma CLI?
+
+um prompt também é uma CLI
+
+ambos são executaveis, um prompt nao.
+
+se for o caso, o script que vai operar em cima do prompt, nao o oposto
+
+script(prompt)
+command(script(prompt))
+
+acho justo.
+
+nucleo
+    - command
+    - prompt
+response
+    - script
+    - input
+scripts
+    - list
+    - confirm
+    - input
+
+então a instancia de prompt deve estar dentro de script
+
+o input retorna sempre uma string, mas cada pessoa pode escolher trabalhar com numeros também
+se o chekcers desse input der falso, ele é instaciado novamente
+o checkers() já poderia estar no input...
+na instancia, você pode colocar a resposta esperada ou não.
+
+uma variavel receberia o valor e trabalharia nisso
+
+mas e se for uma script de escolha (list)
+
+se o prompt tiver como list definido
+basta que a instancia receba como parametro apenas o prompt
+
+- input(prompt(se ele for do tipo list)) - sua resposta certa estará no tamanho das questions
+- input(prompt(se ele for do tipo confirm)) - sua resposta se baseará em Y/N
+- input(prompt(se ele for do tipo input)) seu checador se baseará no tamanho da string (padrão 30 caracteres)
+- input(prompt(se ele for do tipo question) 5) - seu checkador se baseará na resposta dada
+
+=========================================
+
+preciso definir as classes agora
+
+um script executa um prompt
+    - cada script tem uma instancia do prompt?
+            - prompt n pode ter métodos expostos
+                    - apenas addQuestion e a lista de prompts (como array)
+                    - mas precisa ter a LinkedList privada, e acessada somente pelo script
+                            - script extends prompt?
+                            - ambos podem ser comandos
+                                    - comando é privado
+                                        - pacote: command/core?
+    - cada script nao deve conter a instancia do prompt
+
+um script tem vários tipos de script
+
+um script pode ser uma interface?
+            - por enquanto, talvez não. mas podem ser um tipo de script
+            - se for, preciso encontrar métodos em comum entre eles
+                    - executar - pode ser void
+                               - pode retornar um input
+                                        - executar().inputvalue - mas isso atrapalha o incapsulamento se alguem fizer um comparador
+                                        - a nao ser que input seja definido dentro de script
+                    - checkers - é bom que tenha, e que retorne booelan
+                                    - a nao ser que o proprio user decida isso?
+                                          - checkers(input input)
+                                             - dai o cara opera sobre isso
+                    - getInput - talvez sim
+                    - getResponse - cada prompt tem diferentes respostas (uns são 1 respostas, outros pode ser mais)
+                            - podem retornar uma lista
+                                    - se for várias repostas - vai precisar do parametro da pergunta
+                                    - o ideal seria varias possibilidades respostas
+Script:
+- todos tem map
+- todos tem linkedList
+    - se for List - so vai ter 1 item pra cada lista
+
+                    a classe input vai servir de que?
+                        - ela pode ser a que vai fazer o request
+                        - n pode ser acessada
+                        - checkers deve estar dentro dela?
+                    - script e input andam em conjunto
+                        - Input tem o scanner
+                        - script tem acesso ao input e pode consultar a resposta
+                            se script é interface input também precisa ser
+                                - default -> input vira response
+                    - ambos são requests
+
+
+Script n precisa ser acessado... a interface pode
+mas andam de acordo com o prompt
+
+Prompt é public, scriptType nao
+prompt precisa do script e dos tipos de script
+    - construtor publico
+    - classe privada
+    - mesmo pacote -> (commands)
+
+commands
+    - prompt - vai executar o script
+
+    - tipos de script - nao publico - vao so ter os design e o getInput e o checkers
+            - vai retornar o input
+                    - script tem o field atualizaod
+    prompt pega input do script
+
+requests
+    - Script extend requestUser
+                        - response - default - vai trazer a resposta do usuario
+                        - variavel vai att
+
+
+
+
