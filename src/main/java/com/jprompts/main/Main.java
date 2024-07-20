@@ -1,10 +1,6 @@
 package com.jprompts.main;
 
-
 import com.jprompts.command.Prompt;
-import com.jprompts.request.Script;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class Main {
 
@@ -12,12 +8,13 @@ public class Main {
 
         Prompt prompt = new Prompt("confirm");
 
-        prompt.addQuestion("Deposit");
-        prompt.addQuestion("Transference");
-        prompt.addQuestion("Create Customer");
+        prompt.addQuestion("test1");
+        prompt.addQuestion("test2");
+        prompt.addQuestion("test3");
 
         prompt.run();
 
+        System.out.println(prompt.anwser("test2"));
 
 
     }

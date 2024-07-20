@@ -14,7 +14,7 @@ public interface Script extends RequestUser {
 
     void execute();
 
-    @NotNull Script getInstance();
+    @Nullable LinkedList<@NotNull String> getAnwsers();
 
-    @NotNull LinkedList<@NotNull String> getAnwsers();
+    @Nullable String getAnwser();
 }

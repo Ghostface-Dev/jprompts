@@ -12,7 +12,6 @@ final class OptionScript implements Script {
 
     private @Nullable String anwser;
     private final @NotNull Prompt prompt;
-    private final @NotNull LinkedList<@NotNull String> anwsersList = new LinkedList<>();
 
     public OptionScript(@NotNull Prompt prompt) {
         this.anwser = null;
@@ -36,6 +35,7 @@ final class OptionScript implements Script {
         return false;
     }
 
+    @Override
     public @Nullable String getAnwser() {
         return anwser;
     }
@@ -59,21 +59,18 @@ final class OptionScript implements Script {
             outDesignScript(prompt);
             anwser = response();
         }
-        anwsersList.add(anwser);
     }
 
     @Override
-    public @NotNull Script getInstance() {
-        return new OptionScript(prompt);
-    }
-
-    @Override
-    public @NotNull LinkedList<@NotNull String> getAnwsers() {
+    public @Nullable LinkedList<@NotNull String> getAnwsers() {
         return null;
     }
 
+    // objects
+
+
     @Override
-    public boolean equals(@Nullable Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OptionScript that = (OptionScript) o;

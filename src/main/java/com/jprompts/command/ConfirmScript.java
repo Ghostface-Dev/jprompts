@@ -24,19 +24,15 @@ final class ConfirmScript implements Script {
     @Override
     public void outDesignScript(@NotNull Prompt prompt) {
         for (@NotNull String key : prompt.getQuestionMap().keySet()) {
-            System.out.println(" - " + key + " (y/n)");
-            prompt.getQuestionMap().replace(key, null, response());
+            System.out.println(" - " + key.toUpperCase() + " (y/n)");
+            prompt.getQuestionMap().replace(key, null, response().toLowerCase());
         }
     }
 
     @Override
     public void execute() {
+        System.out.println();
         outDesignScript(prompt);
-    }
-
-    @Override
-    public @NotNull Script getInstance() {
-        return new ConfirmScript(prompt);
     }
 
     @Override
@@ -44,6 +40,12 @@ final class ConfirmScript implements Script {
         return null;
     }
 
+    @Override
+    public @Nullable String getAnwser() {
+        return null;
+    }
+
+    // objects
     @Override
     public boolean equals(@Nullable Object o) {
         if (this == o) return true;
