@@ -14,8 +14,7 @@ public class Main {
 
         prompt.run();
 
-        System.out.println(prompt.anwser("test2"));
-
+        System.out.println(prompt.anwser("test3"));
 
     }
 

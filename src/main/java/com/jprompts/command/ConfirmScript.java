@@ -4,58 +4,40 @@ import com.jprompts.request.Script;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.LinkedList;
-import java.util.Objects;
+import java.util.LinkedHashMap;
+
 
 final class ConfirmScript implements Script {
+    private final @NotNull LinkedHashMap<@NotNull String, @NotNull String> questionsMap = new LinkedHashMap<>();
 
-    private final @NotNull Prompt prompt;
-
-    ConfirmScript(@NotNull Prompt prompt) {
-        this.prompt = prompt;
-    }
-
-
-    @Override
-    public boolean checkers(@NotNull String anwser) {
-        return false;
+    public ConfirmScript() {
     }
 
     @Override
-    public void outDesignScript(@NotNull Prompt prompt) {
-        for (@NotNull String key : prompt.getQuestionMap().keySet()) {
-            System.out.println(" - " + key.toUpperCase() + " (y/n)");
-            prompt.getQuestionMap().replace(key, null, response().toLowerCase());
+    public boolean checkers() {
+        for (String value : questionsMap.values()) {
+            if (!value.equalsIgnoreCase("y") && !value.equalsIgnoreCase("n")) {
+                return false;
+            }
         }
+        return true;
     }
 
     @Override
     public void execute() {
-        System.out.println();
-        outDesignScript(prompt);
+        for (@NotNull String key : questionsMap.keySet()) {
+            System.out.println(" - " + key.toLowerCase() + " (y/n)");
+            questionsMap.replace(key, "", response().toLowerCase());
+        }
     }
 
     @Override
-    public @NotNull LinkedList<@NotNull String> getAnwsers() {
-        return null;
+    public @NotNull LinkedHashMap<@NotNull String, @Nullable String> getQuestionsMap() {
+        return this.questionsMap;
     }
 
     @Override
-    public @Nullable String getAnwser() {
-        return null;
-    }
-
-    // objects
-    @Override
-    public boolean equals(@Nullable Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ConfirmScript that = (ConfirmScript) o;
-        return Objects.equals(prompt, that.prompt);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(prompt);
+    public @NotNull String getAnwser(@NotNull String question) {
+        return questionsMap.get(question);
     }
 }

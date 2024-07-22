@@ -4,17 +4,16 @@ import com.jprompts.command.Prompt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 public interface Script extends RequestUser {
 
-    boolean checkers(@NotNull String anwser);
-
-    void outDesignScript(@NotNull Prompt prompt);
+    boolean checkers();
 
     void execute();
 
-    @Nullable LinkedList<@NotNull String> getAnwsers();
+    @NotNull LinkedHashMap<@NotNull String, @Nullable String> getQuestionsMap();
 
-    @Nullable String getAnwser();
+    @NotNull String getAnwser(@NotNull String question);
 }

@@ -1,92 +1,61 @@
 package com.jprompts.command;
 
-import com.jprompts.exceptions.*;
+import com.jprompts.exceptions.InvalidResponseException;
 import com.jprompts.request.Script;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-
 public final class Prompt {
-
-    private final @NotNull LinkedList<@NotNull String> questionList = new LinkedList<>();
-    private final @NotNull Map<@NotNull String, @Nullable String> questionMap = new LinkedHashMap<>();
     private final @NotNull Script script;
-    // instanceOf
-    private final boolean isOption;
+    private @NotNull String anwser;
+
+    private final boolean isList;
     private final boolean isConfirm;
 
     public Prompt(@NotNull String type) {
         if (type.equalsIgnoreCase("list")) {
-            this.script = new OptionScript(this);
-        } else if (type.equalsIgnoreCase("confirm")) {
-            this.script = new ConfirmScript(this);
-        } else {
-            throw new RuntimeException("Invalid script type");
+            this.script = new ListScript();
+        }else if (type.equalsIgnoreCase("confirm")) {
+            this.script = new ConfirmScript();
+        }else {
+            throw new IllegalArgumentException("This prompt type not exist");
         }
-        isOption = script instanceof OptionScript;
-        isConfirm = script instanceof ConfirmScript;
+        this.isList = script instanceof ListScript;
+        this.isConfirm = script instanceof ConfirmScript;
     }
 
-    public void addQuestion(@NotNull String message) {
-        if (isOption) {
-            questionList.add(message.toLowerCase());
+    public void addQuestion(@NotNull String question) {
+        if (isList) {
+            this.script.getQuestionsMap().put(question, "");
         }
         if (isConfirm) {
-            questionMap.put(message.toLowerCase(), null);
+            this.script.getQuestionsMap().put(question, "");
         }
+    }
+
+    public @NotNull String anwser(@Nullable String question) {
+        if (isList) {
+            return this.script.getAnwser(question);
+        }
+        if (isConfirm) {
+            return this.script.getAnwser(question);
+        }
+        return this.anwser;
     }
 
     public void run() {
-        this.script.execute();
-    }
-
-    public @Nullable String anwser(@Nullable String question) {
-        // if is a option type
-        if (isOption) {
-            for (@NotNull String msg : questionList) {
-                if (msg.equalsIgnoreCase(question) || question == null) {
-                    return script.getAnwser();
-                }
+        if (isList) {
+            this.script.execute();
+            while (!this.script.checkers()) {
+                System.out.printf("Invalid command, you need to choose between 1 and %d%n", this.script.getQuestionsMap().size());
             }
         }
+
         if (isConfirm) {
-            if (questionMap.containsKey(question)) {
-                return questionMap.get(question);
+            this.script.execute();
+            if (!this.script.checkers()) {
+                throw new InvalidResponseException("some response is not valid.");
             }
         }
-
-        return null;
-    }
-
-    public @Nullable String answerIfOption() {
-        @NotNull OptionScript option = new OptionScript(this);
-        if (!isOption) {
-            throw new NotEqualsScriptTypeException("Type is not a 'List', try using the getAnswer method");
-        }
-        return anwser(null);
-    }
-
-    @NotNull LinkedList<@NotNull String> getQuestionList() {
-        return questionList;
-    }
-
-    @NotNull Map<@NotNull String, @Nullable String> getQuestionMap() {
-        return questionMap;
-    }
-
-    // objects
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Prompt prompt = (Prompt) o;
-        return Objects.equals(questionList, prompt.questionList) && Objects.equals(questionMap, prompt.questionMap) && Objects.equals(script, prompt.script);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(questionList, questionMap, script);
     }
 }
