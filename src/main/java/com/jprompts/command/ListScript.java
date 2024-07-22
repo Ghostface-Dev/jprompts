@@ -7,11 +7,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedHashMap;
 
 final class ListScript implements Script {
-    private final @NotNull LinkedHashMap<@NotNull String, @NotNull String> questionsMap = new LinkedHashMap <>();
-    private @NotNull String anwser;
-
-    public ListScript() {
-    }
+    private final @NotNull LinkedHashMap<@NotNull String, @Nullable String> questionsMap = new LinkedHashMap <>();
+    private @Nullable String anwser;
 
     @Override
     public boolean checkers() {
@@ -27,7 +24,7 @@ final class ListScript implements Script {
         }
         this.anwser = response();
         for (@NotNull String key : questionsMap.keySet()) {
-            questionsMap.replace(key, "", this.anwser);
+            questionsMap.replace(key, null, this.anwser);
         }
     }
 
@@ -37,7 +34,7 @@ final class ListScript implements Script {
     }
 
     @Override
-    public @NotNull String getAnwser(@Nullable String question) {
+    public @Nullable String getAnwser(@Nullable String question) {
         if (question == null) {
             return this.anwser;
         }

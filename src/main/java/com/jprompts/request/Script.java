@@ -15,5 +15,5 @@ public interface Script extends RequestUser {
 
     @NotNull LinkedHashMap<@NotNull String, @Nullable String> getQuestionsMap();
 
-    @NotNull String getAnwser(@NotNull String question);
+    @Nullable String getAnwser(@NotNull String question);
 }

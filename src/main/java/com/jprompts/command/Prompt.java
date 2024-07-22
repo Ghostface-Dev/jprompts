@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 
 public final class Prompt {
     private final @NotNull Script script;
-    private @NotNull String anwser;
+    private @Nullable String anwser;
 
     private final boolean isList;
     private final boolean isConfirm;
@@ -26,14 +26,14 @@ public final class Prompt {
 
     public void addQuestion(@NotNull String question) {
         if (isList) {
-            this.script.getQuestionsMap().put(question, "");
+            this.script.getQuestionsMap().put(question, null);
         }
         if (isConfirm) {
-            this.script.getQuestionsMap().put(question, "");
+            this.script.getQuestionsMap().putFirst(question, null);
         }
     }
 
-    public @NotNull String anwser(@Nullable String question) {
+    public @Nullable String anwser(@Nullable String question) {
         if (isList) {
             return this.script.getAnwser(question);
         }
@@ -44,13 +44,16 @@ public final class Prompt {
     }
 
     public void run() {
+        if (script.getQuestionsMap().isEmpty()) {
+            throw new RuntimeException("Prompt has no questions");
+        }
         if (isList) {
             this.script.execute();
             while (!this.script.checkers()) {
                 System.out.printf("Invalid command, you need to choose between 1 and %d%n", this.script.getQuestionsMap().size());
+                this.script.execute();
             }
         }
-
         if (isConfirm) {
             this.script.execute();
             if (!this.script.checkers()) {

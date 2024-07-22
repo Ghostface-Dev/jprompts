@@ -6,12 +6,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 
-
 final class ConfirmScript implements Script {
-    private final @NotNull LinkedHashMap<@NotNull String, @NotNull String> questionsMap = new LinkedHashMap<>();
-
-    public ConfirmScript() {
-    }
+    private final @NotNull LinkedHashMap<@NotNull String, @Nullable String> questionsMap = new LinkedHashMap<>();
 
     @Override
     public boolean checkers() {
@@ -27,7 +23,7 @@ final class ConfirmScript implements Script {
     public void execute() {
         for (@NotNull String key : questionsMap.keySet()) {
             System.out.println(" - " + key.toLowerCase() + " (y/n)");
-            questionsMap.replace(key, "", response().toLowerCase());
+            questionsMap.replace(key, null, response().toLowerCase());
         }
     }
 
@@ -37,7 +33,7 @@ final class ConfirmScript implements Script {
     }
 
     @Override
-    public @NotNull String getAnwser(@NotNull String question) {
+        public @Nullable String getAnwser(@Nullable String question) {
         return questionsMap.get(question);
     }
 }
