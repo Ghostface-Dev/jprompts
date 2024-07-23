@@ -1,11 +1,9 @@
 package com.jprompts.request;
 
-import com.jprompts.command.Prompt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 
 public interface Script extends RequestUser {
 
@@ -13,7 +11,7 @@ public interface Script extends RequestUser {
 
     void execute();
 
-    @NotNull LinkedHashMap<@NotNull String, @Nullable String> getQuestionsMap();
+    @NotNull LinkedHashMap<@NotNull Integer, @Nullable String> getPromptMap();
 
-    @Nullable String getAnwser(@NotNull String question);
+    @Nullable String getAnwser(@NotNull Integer id);
 }

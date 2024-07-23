@@ -1,20 +1,11 @@
 package com.jprompts.main;
 
-import com.jprompts.command.Prompt;
+import com.jprompts.core.Prompt;
 
 public class Main {
 
     public static void main(String[] args) {
-
-        Prompt prompt = new Prompt("input");
-
-        prompt.addQuestion("test1");
-        prompt.addQuestion("test2");
-        prompt.addQuestion("test3");
-
-        prompt.run();
-
-        System.out.println(prompt.anwser("test3"));
+        System.out.println("Hello World!");
     }
 
 }
