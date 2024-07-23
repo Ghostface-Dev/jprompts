@@ -11,36 +11,35 @@ public final class Prompt {
 
     private final boolean isList;
     private final boolean isConfirm;
+    private final boolean isInput;
 
     public Prompt(@NotNull String type) {
         if (type.equalsIgnoreCase("list")) {
-            this.script = new ListScript();
-        }else if (type.equalsIgnoreCase("confirm")) {
-            this.script = new ConfirmScript();
-        }else {
+            script = new ListScript();
+        } else if (type.equalsIgnoreCase("confirm")) {
+            script = new ConfirmScript();
+        } else if (type.equalsIgnoreCase("input")) {
+            script = new InputScript();
+        } else {
             throw new IllegalArgumentException("This prompt type not exist");
         }
-        this.isList = script instanceof ListScript;
-        this.isConfirm = script instanceof ConfirmScript;
+
+        isList = script instanceof ListScript;
+        isConfirm = script instanceof ConfirmScript;
+        isInput = script instanceof InputScript;
     }
 
     public void addQuestion(@NotNull String question) {
-        if (isList) {
-            this.script.getQuestionsMap().put(question, null);
+        if (!isConfirm) {
+            script.getQuestionsMap().put(question, null);
         }
         if (isConfirm) {
-            this.script.getQuestionsMap().putFirst(question, null);
+            script.getQuestionsMap().putFirst(question, null);
         }
     }
 
     public @Nullable String anwser(@Nullable String question) {
-        if (isList) {
-            return this.script.getAnwser(question);
-        }
-        if (isConfirm) {
-            return this.script.getAnwser(question);
-        }
-        return this.anwser;
+        return script.getAnwser(question);
     }
 
     public void run() {
@@ -48,17 +47,20 @@ public final class Prompt {
             throw new RuntimeException("Prompt has no questions");
         }
         if (isList) {
-            this.script.execute();
-            while (!this.script.checkers()) {
-                System.out.printf("Invalid command, you need to choose between 1 and %d%n", this.script.getQuestionsMap().size());
-                this.script.execute();
+            script.execute();
+            while (!script.checkers()) {
+                System.out.printf("Invalid command, you need to choose between 1 and %d%n", script.getQuestionsMap().size());
+                script.execute();
             }
         }
         if (isConfirm) {
-            this.script.execute();
-            if (!this.script.checkers()) {
+            script.execute();
+            if (!script.checkers()) {
                 throw new InvalidResponseException("some response is not valid.");
             }
+        }
+        if (isInput) {
+            script.execute();
         }
     }
 }

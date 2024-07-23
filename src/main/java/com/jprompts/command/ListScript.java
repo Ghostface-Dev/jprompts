@@ -12,7 +12,7 @@ final class ListScript implements Script {
 
     @Override
     public boolean checkers() {
-        return Integer.parseInt(this.anwser) > 0 && Integer.parseInt(this.anwser) <= questionsMap.size();
+        return Integer.parseInt(anwser) > 0 && Integer.parseInt(anwser) <= questionsMap.size();
     }
 
     @Override
@@ -22,21 +22,21 @@ final class ListScript implements Script {
             System.out.println(i + " - " + key.toLowerCase());
             i++;
         }
-        this.anwser = response();
+        anwser = response();
         for (@NotNull String key : questionsMap.keySet()) {
-            questionsMap.replace(key, null, this.anwser);
+            questionsMap.replace(key, null, anwser);
         }
     }
 
     @Override
     public @NotNull LinkedHashMap<@NotNull String, @Nullable String> getQuestionsMap() {
-        return this.questionsMap;
+        return questionsMap;
     }
 
     @Override
     public @Nullable String getAnwser(@Nullable String question) {
         if (question == null) {
-            return this.anwser;
+            return anwser;
         }
         return questionsMap.get(question);
     }
