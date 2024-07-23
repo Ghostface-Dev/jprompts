@@ -8,10 +8,13 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedHashMap;
 
 final class OptionScript implements Script {
-    private final @NotNull OptionPrompt prompt = new OptionPrompt();
+    private final @NotNull OptionPrompt prompt;
     private final @NotNull LinkedHashMap<@NotNull Integer, @Nullable String> promptMap = new LinkedHashMap <>();
     private @NotNull String anwser;
 
+    public OptionScript(@NotNull OptionPrompt prompt) {
+        this.prompt = prompt;
+    }
 
     @Override
     public boolean checkers() {

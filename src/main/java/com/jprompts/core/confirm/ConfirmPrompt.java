@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedList;
 
 public class ConfirmPrompt implements Prompt {
-    private final @NotNull ConfirmScript script = new ConfirmScript();
+    private final @NotNull ConfirmScript script = new ConfirmScript(this);
     private final @NotNull LinkedList<@NotNull String> prompts = new LinkedList<>();
     private @NotNull String anwser;
 

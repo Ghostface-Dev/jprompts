@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedList;
 
 public class InputPrompt implements Prompt {
-    private final @NotNull InputScript script = new InputScript();
+    private final @NotNull InputScript script = new InputScript(this);
     private final @NotNull LinkedList<@NotNull String> prompts = new LinkedList<>();
     private @NotNull String anwser;
 

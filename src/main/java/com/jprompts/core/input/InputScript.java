@@ -7,8 +7,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedHashMap;
 
 final class InputScript implements Script {
-    private final @NotNull InputPrompt prompt = new InputPrompt();
+    private final @NotNull InputPrompt prompt;
     private final @NotNull LinkedHashMap<@NotNull Integer, @Nullable String> promptsMap = new LinkedHashMap<>();
+
+    public InputScript(@NotNull InputPrompt prompt) {
+        this.prompt = prompt;
+    }
 
     @Override
     public boolean checkers() {

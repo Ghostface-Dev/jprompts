@@ -8,7 +8,11 @@ import java.util.LinkedHashMap;
 
 final class ConfirmScript implements Script {
     private final @NotNull LinkedHashMap<@NotNull Integer, @Nullable String> promptsMap = new LinkedHashMap<>();
-    private final @NotNull ConfirmPrompt prompt = new ConfirmPrompt();
+    private final @NotNull ConfirmPrompt prompt;
+
+    public ConfirmScript(@NotNull ConfirmPrompt prompt) {
+        this.prompt = prompt;
+    }
 
     @Override
     public boolean checkers() {

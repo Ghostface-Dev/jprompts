@@ -7,13 +7,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedList;
 
 public class MenuPrompt implements Prompt {
-    private final @NotNull MenuScript script = new MenuScript();
+    private final @NotNull MenuScript script = new MenuScript(this);
     private final @NotNull LinkedList<@NotNull String> prompts = new LinkedList<>();
-    private @NotNull String anwser;
-
-    public MenuPrompt() {
-        prompts.addLast("exit");
-    }
+    private @NotNull String anwser = "";
+    private @NotNull String exit;
 
     @Override
     public @Nullable String getAnwser(@NotNull Integer id) {
@@ -29,19 +26,29 @@ public class MenuPrompt implements Prompt {
 
     @Override
     public void run() {
+        exit = String.valueOf(prompts.size() + 1);
+
+        prompts.addLast("exit");
         if (prompts.isEmpty()) {
             throw new RuntimeException("Questions not found");
         }
 
-        script.execute();
-        while (script.checkers()) {
-            System.out.printf("You need to choose between 1 and %d%n", prompts.size());
+        do {
             script.execute();
-        }
+            while (!script.checkers()) {
+                System.out.printf("You need to choose between 1 and %d%n", prompts.size());
+                script.execute();
+            }
+            System.out.println(anwser + " " + exit);
+        } while (!anwser.equals(exit));
     }
 
     @NotNull LinkedList<@NotNull String> getPrompts() {
         return prompts;
+    }
+
+    void setAnwser(@NotNull String anwser) {
+        this.anwser = anwser;
     }
 
 }

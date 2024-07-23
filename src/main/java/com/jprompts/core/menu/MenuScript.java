@@ -1,5 +1,6 @@
 package com.jprompts.core.menu;
 
+import com.jprompts.core.Prompt;
 import com.jprompts.request.Script;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -8,27 +9,28 @@ import java.util.LinkedHashMap;
 
 final class MenuScript implements Script {
     private final @NotNull LinkedHashMap<@NotNull Integer, @Nullable String> promptsMap = new LinkedHashMap<>();
-    private final @NotNull MenuPrompt prompt = new MenuPrompt();
+    private final @NotNull MenuPrompt prompt;
     private @NotNull String anwser;
-    private final @NotNull String exit = String.valueOf(prompt.getPrompts().size());
-    // while anwser != size
+
+    public MenuScript(@NotNull MenuPrompt prompt) {
+        this.prompt = prompt;
+    }
 
     @Override
     public boolean checkers() {
-        return Integer.parseInt(anwser) <= 0 || Integer.parseInt(anwser) > prompt.getPrompts().size();
+        return Integer.parseInt(anwser) > 0 && Integer.parseInt(anwser) <= prompt.getPrompts().size();
     }
 
     @Override
     public void execute() {
-        while (!anwser.equals(exit)) {
-            int i = 1;
-            for (@NotNull String prompts : prompt.getPrompts()) {
-                System.out.println(i + " - " + prompts);
-                i++;
-            }
-            anwser = response();
-            promptsMap.replaceAll((id, response) -> anwser);
+        int i = 1;
+        for (@NotNull String prompts : prompt.getPrompts()) {
+            System.out.println(i + " - " + prompts);
+            i++;
         }
+        anwser = response();
+        prompt.setAnwser(anwser);
+        promptsMap.replaceAll((id, response) -> anwser);
     }
 
     @Override
@@ -40,5 +42,6 @@ final class MenuScript implements Script {
     public @Nullable String getAnwser(@NotNull Integer id) {
         return promptsMap.get(id);
     }
+
 
 }

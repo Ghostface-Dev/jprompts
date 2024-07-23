@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedList;
 
 public class OptionPrompt implements Prompt {
-    private final @NotNull OptionScript script = new OptionScript();
+    private final @NotNull OptionScript script = new OptionScript(this);
     private final @NotNull LinkedList<@NotNull String> prompts = new LinkedList<>();
     private @NotNull String anwser;
 

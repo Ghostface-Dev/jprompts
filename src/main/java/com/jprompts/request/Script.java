@@ -1,5 +1,6 @@
 package com.jprompts.request;
 
+import com.jprompts.core.Prompt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
