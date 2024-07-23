@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 
-class InputScript implements Script {
+final class InputScript implements Script {
     private final @NotNull LinkedHashMap<@NotNull String, @Nullable String> questionsMap = new LinkedHashMap<>();
 
     @Override
