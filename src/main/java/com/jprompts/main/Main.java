@@ -1,18 +1,24 @@
 package com.jprompts.main;
 
-import com.jprompts.core.menu.MenuPrompt;
-import com.jprompts.core.option.OptionPrompt;
+
+import com.jprompts.template.Prompt;
+import com.jprompts.template.confirm.ConfirmPrompt;
+import com.jprompts.template.input.InputPrompt;
+import com.jprompts.template.list.ListPrompt;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        MenuPrompt menuPrompt = new MenuPrompt();
+        ListPrompt prompt = new ListPrompt();
 
-        menuPrompt.addQuestion("test1", 1);
-        menuPrompt.addQuestion("test1", 2);
-        menuPrompt.addQuestion("test1", 3);
+        prompt.addQuestion("test1", 1);
+        prompt.addQuestion("test2", 2);
+        prompt.addQuestion("test3", 3);
 
-        menuPrompt.run();
+        prompt.run();
+
+        System.out.println(prompt.getAnwser(3));
+
     }
 }
